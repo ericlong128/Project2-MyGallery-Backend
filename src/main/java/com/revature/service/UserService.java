@@ -32,10 +32,12 @@ public class UserService {
 		return userRepo.findAll().stream()
 				.collect(Collectors.toSet());
 	}
-	
+
 	 
 	@Transactional(propagation=Propagation.REQUIRES_NEW) // when method is invoked, it begins a *new* transaction (one unit of work)
 	public User add(User u) {
+		
+		
 		
 		// Check if user has an Address or Addresses
 		if (u.getAddresses() != null) {

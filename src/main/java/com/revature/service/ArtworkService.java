@@ -1,5 +1,7 @@
 package com.revature.service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,56 +23,93 @@ public class ArtworkService {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
+	@Autowired
+	private ArtworkRepository artworkRepo;
 	
 	@Autowired
 	private UserRepository userRepo;
 
-	@Autowired
-	private ArtworkRepository artworkRepo;
-	
-	
-	@Transactional(readOnly=true) // make sure method fires against database in one unit
-	public Set<Artwork> findAll() {
-		
-		return artworkRepo.findAll().stream()
-				.collect(Collectors.toSet());
+
+	@Transactional(readOnly = true)
+	public List<Artwork> findAll() {
+		return artworkRepo.findAll().stream().collect(Collectors.toList());
 	}
-	
-	 
+
 	@Transactional(propagation=Propagation.REQUIRES_NEW) // when method is invoked, it begins a *new* transaction (one unit of work)
-	public Artwork add(Artwork art, User u) { 
-		try {
-			if (u.getId() <= 0) {
-				return artworkRepo.save(art);
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			log.warn("No user.");
-		}
-		return art; // return empty art object if id not > 0
-		
+	public Artwork add(Artwork art) {
+		return artworkRepo.save(art);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRED) // default setting
 	public void remove(int id) {
-		userRepo.deleteById(id);
+		artworkRepo.deleteById(id);
 	}
 	
-	@Transactional(readOnly=true)
-	public User getUserByUsername(String username) {
-		return userRepo.findByUsername(username)
-				.orElseThrow(() -> new UserNotFoundException("No user found with username " + username));
-	}
+//	@Transactional(readOnly=true)
+//	public List<Artwork> getArtworkByOwnerId(int id) {
+//		try {
+//			return artworkRepo.findByOwnerId(id);
+//		} catch (NullPointerException e) {
+//			log.warn("No artwork found with id " + id);
+//		}
+//		return null;
+//	}
 	
 	@Transactional(readOnly=true)
-	public User getById(int id) {
+	public Artwork getById(int id) {
 		if (id <= 0) {
 			log.warn("ID cannot be <= 0. ID passed was: {}", id);
 			return null;
 		} else {
-			return userRepo.getById(id);
+			return artworkRepo.getById(id);
 		}
 	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW) // when method is invoked, it begins a *new* transaction (one unit of work)
+	public Artwork updateArtwork(int id, Artwork updateArt) {
+			Artwork art = artworkRepo.getById(id);
+			
+			if(art.getArtic_id()!=updateArt.getArtic_id()) {
+				art.setArtic_id(updateArt.getArtic_id());
+			}
+			
+			if(!art.getImage_id().equals(updateArt.getImage_id())) {
+				art.setImage_id(updateArt.getImage_id());
+			}
 
+			if(!art.getImage_config().equals(updateArt.getImage_config())) {
+				art.setImage_config(updateArt.getImage_config());
+			}
+
+			if(!art.getTitle().equals(updateArt.getTitle())) {
+				art.setTitle(updateArt.getTitle());
+			}
+
+			if(!art.getArtist().equals(updateArt.getArtist())) {
+				art.setArtist(updateArt.getArtist());
+			}
+
+			if(!art.getOrigin().equals(updateArt.getOrigin())) {
+				art.setOrigin(updateArt.getOrigin());
+			}
+
+			if(!art.getDate().equals(updateArt.getDate())) {
+				art.setDate(updateArt.getDate());
+			}
+
+			if(!art.getDescription().equals(updateArt.getDescription())) {
+				art.setDescription(updateArt.getDescription());
+			}
+
+			if(art.getWidth()!=updateArt.getWidth()) {
+				art.setWidth(updateArt.getWidth());
+			}
+
+			if(art.getHeight()!=updateArt.getHeight()) {
+				art.setHeight(updateArt.getHeight());
+			}
+
+			return art;
+	}
 
 }

@@ -18,7 +18,6 @@ import com.revature.model.User;
 
 @Service
 public class UserService {
-
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
@@ -37,10 +36,6 @@ public class UserService {
 	 
 	@Transactional(propagation=Propagation.REQUIRES_NEW) // when method is invoked, it begins a *new* transaction (one unit of work)
 	public User add(User u) {
-		// Check if user has an Artwork or Artworks
-		if (u.getArtworks() != null) {
-			u.getArtworks().forEach(artwork -> artworkRepo.save(artwork));
-		}
 		return userRepo.save(u);
 	}
 	
@@ -63,5 +58,28 @@ public class UserService {
 		} else {
 			return userRepo.getById(id);
 		}
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW) // when method is invoked, it begins a *new* transaction (one unit of work)
+	public User updateUser(int id, User updateU) {
+			User u = userRepo.getById(id);
+
+			if(!u.getFirstName().equals(updateU.getFirstName())) {
+				u.setFirstName(updateU.getFirstName());
+			}
+			if(!u.getLastName().equals(updateU.getLastName())) {
+				u.setLastName(updateU.getLastName());
+			}
+			if(!u.getUsername().equals(updateU.getUsername())) {
+				u.setUsername(updateU.getUsername());
+			}
+			if(!u.getPassword().equals(updateU.getPassword())) {
+				u.setPassword(updateU.getPassword());
+			}
+			if(!u.getEmail().equals(updateU.getEmail())) {
+				u.setEmail(updateU.getEmail());
+			}
+			
+			return u;
 	}
 }

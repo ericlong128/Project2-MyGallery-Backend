@@ -63,4 +63,6 @@ public class UserController {
 	public ResponseEntity<User> updateUserInfo(@PathVariable("id") int id, @Valid @RequestBody User u) {
 		return ResponseEntity.ok(userServ.updateUser(id, u));
 	}
+	
+
 }

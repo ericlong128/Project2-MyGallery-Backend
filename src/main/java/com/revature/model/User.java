@@ -33,6 +33,7 @@ public class User {
 		super();
 	}
 
+	
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +54,7 @@ public class User {
 	@Email
 	private String email;
 	
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_artworks",
 		joinColumns = { @JoinColumn(name = "user_id")},
@@ -86,6 +88,17 @@ public class User {
 
 	
 	
+	public User(@Length(min = 2) String firstName, String lastName,
+			@NotBlank @Length(min = 5) @Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]*") String username,
+			@NotBlank String password, @Email String email) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
+
 	public int getId() {
 		return id;
 	}

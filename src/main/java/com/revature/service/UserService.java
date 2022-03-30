@@ -79,7 +79,13 @@ public class UserService {
 			if(!u.getEmail().equals(updateU.getEmail())) {
 				u.setEmail(updateU.getEmail());
 			}
-			
 			return u;
 	}
+	
+
+//	@Transactional(propagation=Propagation.REQUIRES_NEW) // when method is invoked, it begins a *new* transaction (one unit of work)
+//	public User addArtworkToUser(Artwork art, User u) {
+//		userRepo.joinArtworkToUser(art.getId(), u.getId());
+//		return userRepo.save(u);
+//	}
 }

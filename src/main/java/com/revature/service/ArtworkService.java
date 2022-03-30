@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -37,23 +38,33 @@ public class ArtworkService {
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW) // when method is invoked, it begins a *new* transaction (one unit of work)
 	public Artwork add(Artwork art) {
-		return artworkRepo.save(art);
+		artworkRepo.save(art);
+		
+		 User owner = new User();
+		 User u = new User();
+		 
+		 Set<User> owners = art.getOwners();
+		 
+		 Iterator<User> it = owners.iterator();
+		 if (it.hasNext()) {
+			 owner = it.next();
+			 art.getOwners().add(owner);
+		 }
+
+		 u = userRepo.getById(owner.getId());
+
+		 u.getArtworks().add(art);
+		 artworkRepo.save(art);
+		 userRepo.save(u);
+		 
+		return art;
 	}
-	
+
+
 	@Transactional(propagation=Propagation.REQUIRED) // default setting
 	public void remove(int id) {
 		artworkRepo.deleteById(id);
 	}
-	
-//	@Transactional(readOnly=true)
-//	public List<Artwork> getArtworkByOwnerId(int id) {
-//		try {
-//			return artworkRepo.findByOwnerId(id);
-//		} catch (NullPointerException e) {
-//			log.warn("No artwork found with id " + id);
-//		}
-//		return null;
-//	}
 	
 	@Transactional(readOnly=true)
 	public Artwork getById(int id) {

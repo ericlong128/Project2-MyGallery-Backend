@@ -88,6 +88,17 @@ public class User {
 
 	
 	
+	public User(@Length(min = 2) String firstName, String lastName,
+			@NotBlank @Length(min = 5) @Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]*") String username,
+			@NotBlank String password, @Email String email) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
+
 	public int getId() {
 		return id;
 	}

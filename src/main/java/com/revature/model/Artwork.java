@@ -49,7 +49,8 @@ public class Artwork {
 	private int height;			// data.height
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "artworks")
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "artworks")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "artworks")
 	private Set<User> owners;
 
 

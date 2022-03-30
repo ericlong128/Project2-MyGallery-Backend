@@ -1,5 +1,8 @@
 package com.revature.web;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,7 +44,18 @@ public class ArtworkController {
 	@PostMapping("/add")
 	public ResponseEntity<Artwork> addArtwork(@Valid @RequestBody Artwork art) {
 										// @Valid enforces Validations set up
+		
+//	 User owner = new User();
+//	 Set<User> owners = art.getOwners();
+//	 
+//	 Iterator<User> it = owners.iterator();
+//	 if (it.hasNext()) {
+//		 owner = it.next();
+//		 art.getOwners().add(owner);
+//	 }
+		
 		return ResponseEntity.ok(artworkServ.add(art));
+//		return ResponseEntity.ok(artworkServ.add(art, owner));
 		// AOP intercepts invalid response with ResponseEntity Handler
 	}
 	

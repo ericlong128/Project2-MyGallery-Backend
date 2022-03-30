@@ -33,6 +33,7 @@ public class User {
 		super();
 	}
 
+	
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +54,7 @@ public class User {
 	@Email
 	private String email;
 	
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_artworks",
 		joinColumns = { @JoinColumn(name = "user_id")},

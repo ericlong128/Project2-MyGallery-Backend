@@ -50,7 +50,7 @@ public class Artwork {
 	
 	
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "artworks")
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "artworks")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "artworks")
 	private Set<User> owners;
 
 

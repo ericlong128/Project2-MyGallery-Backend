@@ -54,7 +54,7 @@ public class ArtworkService {
 		 u = userRepo.getById(owner.getId());
 
 		 u.getArtworks().add(art);
-		 artworkRepo.save(art);
+		// artworkRepo.save(art);
 		 userRepo.save(u);
 		 
 		return art;
@@ -63,7 +63,22 @@ public class ArtworkService {
 
 	@Transactional(propagation=Propagation.REQUIRED) // default setting
 	public void remove(int id) {
-		artworkRepo.deleteById(id);
+		Artwork art = artworkRepo.getById(id);
+		
+		 User owner = new User();
+		 
+		 Set<User> owners = art.getOwners();
+		 
+		 Iterator<User> it = owners.iterator();
+		 if (it.hasNext()) {
+			 owner = it.next();
+//			 art.getOwners().remove(owner);
+		 }
+
+		 User u = userRepo.getById(owner.getId());
+		 u.getArtworks().remove(art);
+		 userRepo.save(u);
+		 artworkRepo.deleteById(id);
 	}
 	
 	@Transactional(readOnly=true)

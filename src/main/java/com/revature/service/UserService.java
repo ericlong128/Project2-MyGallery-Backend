@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.data.ArtworkRepository;
 import com.revature.data.UserRepository;
+import com.revature.exception.AuthenticationException;
 import com.revature.exception.UserNotFoundException;
 import com.revature.model.Artwork;
 import com.revature.model.User;
@@ -25,6 +26,18 @@ public class UserService {
 
 	@Autowired
 	private ArtworkRepository artworkRepo;
+	
+	public User authenticate(User user) {
+		
+		User userInDb = userRepo.findByUsername(user.getUsername())
+				.orElseThrow(AuthenticationException::new);
+		
+		if (user.getPassword().equals(userInDb.getPassword())) {
+			return userInDb;
+		}
+		
+		throw new AuthenticationException();
+	}
 	
 	@Transactional(readOnly=true) // make sure method fires against database in one unit
 	public Set<User> findAll() {

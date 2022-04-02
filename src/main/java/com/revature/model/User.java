@@ -43,6 +43,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 
+	@Column(unique = true)
 	@NotBlank
 	@Length(min = 5)
 	@Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]*")

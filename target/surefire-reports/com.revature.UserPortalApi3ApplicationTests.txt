@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.revature.UserPortalApi3ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.563 s - in com.revature.UserPortalApi3ApplicationTests

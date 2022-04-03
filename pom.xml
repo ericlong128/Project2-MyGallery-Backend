@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.revature</groupId>
-	<artifactId>user-portal-api-4</artifactId>
+	<artifactId>project2-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>user-portal-api-4</name>
-	<description>Demo project for Spring REST API 4</description>
+	<name>project2-backend</name>
+	<description>project2-backend</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
